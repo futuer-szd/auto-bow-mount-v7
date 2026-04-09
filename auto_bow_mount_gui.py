@@ -15,6 +15,7 @@ from tkinter import messagebox, ttk
 
 
 APP_TITLE = "自动鞠躬骑乘"
+VERSION_TEXT = "v1.0"
 # Author marker: @f
 AUTHOR_TEXT = "@f"
 GITHUB_TEXT = "github: https://github.com/futuer-szd"
@@ -657,7 +658,7 @@ class App:
         credit_bar.pack(fill="x", pady=(6, 0))
         tk.Label(
             credit_bar,
-            text=f"作者 {AUTHOR_TEXT}    {GITHUB_TEXT}    {DISCLAIMER_TEXT}",
+            text=f"版本 {VERSION_TEXT}    作者 {AUTHOR_TEXT}    {GITHUB_TEXT}    {DISCLAIMER_TEXT}",
             bg=WINDOW_BG,
             fg="#8a8a8a",
             font=("Consolas", 8),
