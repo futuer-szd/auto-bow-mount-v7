@@ -15,7 +15,7 @@ from tkinter import messagebox, ttk
 
 
 APP_TITLE = "自动鞠躬骑乘"
-VERSION_TEXT = "v1.0"
+VERSION_TEXT = "v1.1"
 # Author marker: @f
 AUTHOR_TEXT = "@f"
 GITHUB_TEXT = "github: https://github.com/futuer-szd"
@@ -365,16 +365,21 @@ class AutomationRunner:
         if now < window_start or now > window_end:
             return True
 
-        self.log("进入北京时间月卡跳过时间窗，等待到 04:00:10 后自动点击一次。")
+        self.log("进入北京时间月卡跳过时间窗，等待到 04:00:10 后自动连续点击 3 次。")
         while not self.stop_event.is_set():
             if not self._wait_if_paused():
                 return False
             now = datetime.now(BEIJING_TZ)
             if now >= trigger_time:
-                left_click()
+                for click_index in range(3):
+                    if not self._wait_if_paused():
+                        return False
+                    left_click()
+                    self.log(f"已执行 04:00:10 月卡跳过点击第 {click_index + 1}/3 次。")
+                    if not self._sleep(5.0):
+                        return False
                 self.last_daily_skip_date = today
-                self.log("已执行 04:00:10 月卡跳过点击，并额外等待 10 秒。")
-                return self._sleep(10.0)
+                return True
             time.sleep(0.5)
         return False
 
